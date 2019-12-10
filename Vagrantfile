@@ -86,6 +86,7 @@ Vagrant.configure("2") do |config|
   config.vm.provision "shell", path: "scripts/clean.sh"
 
   config.vm.provision "file", source: "./config/apps", destination: "/tmp/apps"
+  config.vm.provision "file", source: "./config/docker.service.d", destination: "/tmp/docker.service.d"
 
   config.vm.provision "shell", path: "scripts/provision.sh"
 

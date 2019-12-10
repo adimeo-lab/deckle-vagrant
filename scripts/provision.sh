@@ -47,6 +47,10 @@ fi
 
 
 # Configuring Docker
+if [ -d "/tmp/docker.service.d" ]; then
+mv /tmp/docker.service.d /etc/systemd/system/
+fi
+
 if [ ! "$(docker network ls | grep deckle)" ]; then
 echo "Creating the deckle docker network"
 docker network create deckle
@@ -71,3 +75,6 @@ else
   echo "Unable to access the apps directory (/home/deckle/apps)"
 fi
 
+# install oh my zsh
+echo "Installing Oh My Zsh..."
+runuser -l deckle -c 'sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended'
