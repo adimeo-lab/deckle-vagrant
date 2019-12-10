@@ -1,0 +1,23 @@
+version: "3.2"
+
+services:
+    maildev:
+        image: djfarrelly/maildev
+        container_name: maildev
+        ports:
+          - "80"
+          - "25"
+        restart: unless-stopped
+        labels:
+          - "traefik.enable=true"
+          - "traefik.http.routers.maildev-maildev.rule=Host(`maildev.deckle.local`)"
+          - "traefik.http.routers.maildev-maildev.entryPoints=web"
+          - "traefik.http.services.maildev-maildev.loadbalancer.server.port=80"
+          - "traefik.tcp.routers.maildev-maildev.rule=HostSNI(`smtp.deckle.local`)"
+          - "traefik.tcp.routers.maildev-maildev.entryPoints=smtp"
+              
+networks:
+  default:
+    external:
+      name: deckle
+ 

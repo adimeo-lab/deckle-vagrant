@@ -1,0 +1,22 @@
+version: "3.2"
+
+services:
+    portainer:
+        image: portainer/portainer
+        container_name: "portainer"
+        restart: unless-stopped
+        ports:
+            - 9000:9000
+        #    - 8000:8000
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock
+        labels:
+            - "traefik.enable=true"
+            - "traefik.http.routers.portainer-portainer.rule=Host(`portainer.deckle.local`)"    
+            - "traefik.http.services.portainer-portainer.loadbalancer.server.port=9000"
+            - "traefik.http.routers.portainer-portainer.entryPoints=web"
+              
+networks:
+  default:
+    external:
+      name: deckle

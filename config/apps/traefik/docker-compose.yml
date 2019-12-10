@@ -1,0 +1,23 @@
+version: '3.2'
+services:
+    traefik:
+        image: traefik:latest # The official Traefik docker image
+        container_name: traefik
+        restart: unless-stopped
+        command: --api.insecure=true --providers.docker
+        ports:
+            - "80:80"     # The HTTP port
+            - "8080:8080" # The Web UI
+            - "443:443"   # The HTTPS port
+        volumes:
+            - /var/run/docker.sock:/var/run/docker.sock # So that Traefik can listen to the Docker events
+            - ./conf/traefik.toml:/etc/traefik/traefik.toml
+        labels:
+            - "traefik.enable=true"
+            - "traefik.http.routers.traefik-traefik.entryPoints=web,websecure"
+            - "traefik.http.routers.traefik-traefik.rule=Host(`traefik.deckle.local`)"
+            - "traefik.http.services.traefik.loadbalancer.server.port=8080"
+networks:
+   default:
+     external:
+       name: deckle
