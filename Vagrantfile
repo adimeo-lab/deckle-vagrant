@@ -72,7 +72,13 @@ Vagrant.configure("2") do |config|
      vb.gui = false
      vb.name = "deckle-vm"
      vb.memory = 4096
+     config.vm.network "private_network", type: "dhcp"
+
   end
+
+
+
+
 
   # View the documentation for the provider you are using for more
   # information on available options.
