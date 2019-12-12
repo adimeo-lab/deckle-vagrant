@@ -17,8 +17,8 @@ services:
       MYSQL_DATABASE: ${MYSQL_DATABASE}
       MYSQL_USER: ${MYSQL_USER}
       MYSQL_PASSWORD: ${MYSQL_PASSWORD}
-  pma:
-    container_name: pma
+  pma57:
+    container_name: pma57
     restart: unless-stopped
     labels:
       - "traefik.enable=true"

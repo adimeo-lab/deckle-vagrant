@@ -69,7 +69,7 @@ if [ -d "/home/deckle/apps" ]; then
     (
       cd "$dir" || exit
       if [ -f docker-compose.yml ]; then
-        docker-compose up -d
+        docker-compose up -d --remove-orphans
       fi
     )
   done < <(find . -mindepth 1 -maxdepth 1 -type d -print0)
