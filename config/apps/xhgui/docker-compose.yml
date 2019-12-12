@@ -1,0 +1,35 @@
+version: '3'
+services:
+  xhgui:
+    image: edyan/xhgui:php7.2
+    container_name: xhgui
+    restart: unless-stopped
+    volumes:
+      - ./conf/xhgui-config.php:/usr/local/src/xhgui/config/config.php
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.xhgui-xhgui.entryPoints=web,websecure"
+      - "traefik.http.routers.xhgui-xhgui.rule=Host(`xhgui.deckle.local`)"
+      - "traefik.http.services.xhgui-xhgui.loadbalancer.server.port=80"
+
+  mongo:
+    image: percona/percona-server-mongodb:3.6
+    container_name: xhgui-mongo
+    restart: unless-stopped
+    # (case sensitive) engine: mmapv1, rocksdb, wiredTiger, inMemory
+    command: --storageEngine=wiredTiger
+    environment:
+      - MONGO_INITDB_DATABASE=xhprof
+    volumes:
+      - ./conf/mongo.init.d:/docker-entrypoint-initdb.d
+      - mongodb:/data/db
+    ports:
+      - "27017:27017"
+
+volumes:
+    mongodb:
+
+networks:
+   default:
+     external:
+       name: deckle
