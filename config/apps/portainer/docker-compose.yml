@@ -5,17 +5,18 @@ services:
         image: portainer/portainer
         container_name: "portainer"
         restart: unless-stopped
+        command: --admin-password '$$2y$$05$$75o76bvEqMswfGX1E2qQ7.Q7vzcYxUrvga2FC7pBWNi/./tSvggFK' -H unix:///var/run/docker.sock
         ports:
             - 9000:9000
-        #    - 8000:8000
+            - 8000:8000
         volumes:
             - /var/run/docker.sock:/var/run/docker.sock
         labels:
             - "traefik.enable=true"
-            - "traefik.http.routers.portainer-portainer.rule=Host(`portainer.deckle.local`)"    
+            - "traefik.http.routers.portainer-portainer.rule=Host(`portainer.deckle.local`)"
             - "traefik.http.services.portainer-portainer.loadbalancer.server.port=9000"
             - "traefik.http.routers.portainer-portainer.entryPoints=web"
-              
+
 networks:
   default:
     external:
