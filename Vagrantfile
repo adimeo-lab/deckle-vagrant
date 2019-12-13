@@ -57,6 +57,14 @@ Vagrant.configure("2") do |config|
 
   # VM Config
 
+  config.vm.provider "virtualbox" do |vb|
+     # Display the VirtualBox GUI when booting the machine
+     vb.gui = false
+     vb.name = "deckle-vm"
+     vb.memory = 4096
+     config.vm.network "private_network", type: "dhcp"
+
+  end
 
 
     config.vm.provider "parallels" do |prl|
@@ -67,14 +75,7 @@ Vagrant.configure("2") do |config|
     end
 
 
-  config.vm.provider "virtualbox" do |vb|
-     # Display the VirtualBox GUI when booting the machine
-     vb.gui = false
-     vb.name = "deckle-vm"
-     vb.memory = 4096
-     config.vm.network "private_network", type: "dhcp"
 
-  end
 
 
 
