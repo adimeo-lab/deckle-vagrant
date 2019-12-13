@@ -48,6 +48,8 @@ if [ -d "/tmp/docker.service.d" ]; then
     rm -rf "/etc/systemd/system/docker.service.d";
   fi
 mv /tmp/docker.service.d /etc/systemd/system/
+systemctl daemon-reload
+service docker restart
 fi
 
 if ! docker network ls | grep -q deckle; then
@@ -62,7 +64,7 @@ echo ""
 usermod -G docker vagrant
 
 # starting docker apps
-echo "Starting deckle apps..."
+echo "Starting Deckle apps..."
 if [ -d "/home/deckle/apps" ]; then
   cd /home/deckle/apps || exit;
   while IFS= read -d $'\0' -r dir ; do
