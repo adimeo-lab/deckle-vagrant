@@ -64,7 +64,7 @@ To prevent some deckle commands from behaving oddly, you should add your referen
 This is for instance required for commands like `db:import` in Drupal8 projects.
 
 ```shell script
-ssh-keyscan -t rsa -H dev.adimeo.eu >> ~/.ssh/known_hosts
+deckle vm:ssh:add-host remote.host.name
 ```
 
 
